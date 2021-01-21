@@ -1,24 +1,62 @@
-# README
+# Asssignment
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Approach
 
-Things you may want to cover:
+- Rails 6, API mode
+- Postgres
+- Rest API
 
-* Ruby version
 
-* System dependencies
+## Context
 
-* Configuration
+Trainees select trainers.
+Trainers create and assign workouts to trainees.
+Workouts consist of multiple exercises.
+Exercises have a fixed duration
 
-* Database creation
 
-* Database initialization
+## Main Actions
 
-* How to run the test suite
+- Trainer views a workout
+- Trainer creates a workout
+- Trainer updates a workout
+- Trainer deletes a workout
+- Trainer views all of their trainees
+- Trainer assigns a workout for a trainee
 
-* Services (job queues, cache servers, search engines, etc.)
+- Trainee chooses a trainer based on desired expertise (Sounds like 2 actions):
+  - Trainee views trainers, filterable by trainer expertise
+  - Trainee selects a trainer
+- Trainee overviews all workouts, filterable by time period
 
-* Deployment instructions
 
-* ...
+## Notes / Todo
+
+- generate new rails app in api mode
+
+  rails new vaha_assignment --api -d postgresql
+
+- install rspec
+
+- generate models
+  - user
+    - trainer
+    - trainee
+    - join table: trainee_trainer
+  - workout
+    - join table: trainee_workout
+  - exercise
+    - join table: workout_exercise
+
+- install devise & devise_token_auth for identifying user sessions
+  - `rails g devise_token_auth:install User auth`
+
+- generate main routes
+  - namespace the endpoints
+    `namespace :api do
+      namespace :v1 do
+        resources ...`
+
+- write specs for the main actions
+  - ensure errors are handled appropriately
+  - cover edge cases
