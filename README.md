@@ -47,6 +47,9 @@ Exercises have a fixed duration
     - join table: trainee_workout
   - exercise
     - join table: workout_exercise
+  - expertise
+
+- add seed data for exercises and expertises
 
 - install devise & devise_token_auth for identifying user sessions
   - `rails g devise_token_auth:install User auth`

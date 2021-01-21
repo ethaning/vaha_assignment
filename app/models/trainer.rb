@@ -19,5 +19,9 @@
 #
 #  fk_rails_...  (expertise_id => expertises.id)
 #
-class User < ApplicationRecord
+class Trainer < User
+  belongs_to :expertise
+
+  has_many :trainee_trainers
+  has_many :trainees, through: :trainee_trainer
 end
