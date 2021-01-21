@@ -21,5 +21,8 @@
 class Workout < ApplicationRecord
   belongs_to :creator, class_name: "User"
 
+  has_many :trainee_workouts
+  has_many :trainees, through: :trainee_workouts
+
   enum status: { draft: 0, published: 1 }
 end

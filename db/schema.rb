@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_003624) do
+ActiveRecord::Schema.define(version: 2021_01_21_004503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 2021_01_21_003624) do
     t.index ["trainer_id"], name: "index_trainee_trainers_on_trainer_id"
   end
 
+  create_table "trainee_workouts", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.bigint "workout_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["trainee_id"], name: "index_trainee_workouts_on_trainee_id"
+    t.index ["workout_id"], name: "index_trainee_workouts_on_workout_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -60,6 +69,8 @@ ActiveRecord::Schema.define(version: 2021_01_21_003624) do
 
   add_foreign_key "trainee_trainers", "users", column: "trainee_id"
   add_foreign_key "trainee_trainers", "users", column: "trainer_id"
+  add_foreign_key "trainee_workouts", "users", column: "trainee_id"
+  add_foreign_key "trainee_workouts", "workouts"
   add_foreign_key "users", "expertises"
   add_foreign_key "workouts", "users", column: "creator_id"
 end
