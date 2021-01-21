@@ -24,5 +24,8 @@ class Workout < ApplicationRecord
   has_many :trainee_workouts
   has_many :trainees, through: :trainee_workouts
 
+  has_many :workout_exercises
+  has_many :exercises, through: :workout_exercises
+
   enum status: { draft: 0, published: 1 }
 end
