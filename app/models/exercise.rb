@@ -1,14 +1,12 @@
 # == Schema Information
 #
-# Table name: expertises
+# Table name: exercises
 #
 #  id         :bigint           not null, primary key
+#  duration   :integer
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-FactoryBot.define do
-  factory :expertise do
-    name { "MyString" }
-  end
+class Exercise < ApplicationRecord
 end
