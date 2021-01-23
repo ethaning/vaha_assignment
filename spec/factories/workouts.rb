@@ -20,9 +20,9 @@
 #
 FactoryBot.define do
   factory :workout do
-    name { "MyString" }
-    creator { nil }
-    duration { 1 }
-    state { 1 }
+    name { "#{Faker::JapaneseMedia::SwordArtOnline.game_name} Workout" }
+    association :creator, factory: :trainer
+    duration { 0 }
+    state { 0 }
   end
 end

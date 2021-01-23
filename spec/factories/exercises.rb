@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :exercise do
-    name { "MyString" }
-    duration { 1 }
+    name { Faker::JapaneseMedia::DragonBall.unique.race }
+    duration { rand(60) + 15 }
   end
 end

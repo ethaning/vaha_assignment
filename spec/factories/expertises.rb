@@ -9,6 +9,6 @@
 #
 FactoryBot.define do
   factory :expertise do
-    name { "MyString" }
+    name { Faker::Esport.unique.game }
   end
 end
