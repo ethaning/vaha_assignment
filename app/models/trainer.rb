@@ -37,8 +37,8 @@
 class Trainer < User
   belongs_to :expertise
 
-  has_many :trainee_trainer
-  has_many :trainees, through: :trainee_trainer
+  has_many :trainee_trainers
+  has_many :trainees, through: :trainee_trainers
 
   validates :expertise_id, presence: true
 end
