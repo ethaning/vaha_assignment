@@ -3,8 +3,8 @@
 # Table name: workouts
 #
 #  id         :bigint           not null, primary key
-#  duration   :integer
-#  name       :string
+#  duration   :integer          default(0), not null
+#  name       :string           not null
 #  state      :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

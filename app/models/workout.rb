@@ -3,8 +3,8 @@
 # Table name: workouts
 #
 #  id         :bigint           not null, primary key
-#  duration   :integer
-#  name       :string
+#  duration   :integer          default(0), not null
+#  name       :string           not null
 #  state      :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -27,5 +27,8 @@ class Workout < ApplicationRecord
   has_many :workout_exercises
   has_many :exercises, through: :workout_exercises
 
-  enum status: { draft: 0, published: 1 }
+  validates :name, :state, presence: true
+  validates :duration, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  enum state: { draft: 0, published: 1 }
 end
