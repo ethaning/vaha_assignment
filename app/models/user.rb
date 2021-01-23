@@ -54,4 +54,11 @@ class User < ApplicationRecord
   def trainee?
     type == "Trainee"
   end
+
+  def to_builder
+    Jbuilder.new do |user|
+      user.(self, :first_name, :last_name, :email, :created_at, :type)
+      user.expertise expertise.to_builder
+    end
+  end
 end

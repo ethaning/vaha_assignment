@@ -11,4 +11,10 @@ class Expertise < ApplicationRecord
   has_many :trainers
 
   validates :name, presence: true, uniqueness: true
+
+  def to_builder
+    Jbuilder.new do |expertise|
+      expertise.(self, :name)
+    end
+  end
 end

@@ -33,6 +33,13 @@ class Workout < ApplicationRecord
 
   enum state: { draft: 0, published: 1 }
 
+  def to_builder
+    Jbuilder.new do |workout|
+      workout.(self, :name, :duration, :state, :created_at)
+      workout.creator creator.to_builder
+    end
+  end
+
   private
 
   def creator_is_trainer
