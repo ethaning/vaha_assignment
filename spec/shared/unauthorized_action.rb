@@ -1,4 +1,4 @@
-RSpec.shared_examples 'unauthorized_trainee' do
+RSpec.shared_examples 'unauthorized_action' do
   it "returns an error" do
     subject
 

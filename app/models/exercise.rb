@@ -18,4 +18,10 @@ class Exercise < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
   validates :duration, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  def to_builder
+    Jbuilder.new do |exercise|
+      exercise.(self, *self.attributes.keys)
+    end
+  end
 end

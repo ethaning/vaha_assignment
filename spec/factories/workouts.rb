@@ -24,5 +24,13 @@ FactoryBot.define do
     association :creator, factory: :trainer
     duration { 0 }
     state { 0 }
+
+    trait :with_exercise do
+      association :creator, factory: :trainer, strategy: :create
+
+      after(:create, :build) do |workout, _|
+        workout.exercises << create(:exercise)
+      end
+    end
   end
 end

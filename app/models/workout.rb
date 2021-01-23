@@ -37,8 +37,12 @@ class Workout < ApplicationRecord
 
   def to_builder
     Jbuilder.new do |workout|
-      workout.(self, :name, :duration, :state, :created_at)
+      workout.(self, *self.attributes.except("creator_id").keys)
       workout.creator creator.to_builder
+      workout.exercises exercises.map(&:to_builder).map(&:attributes!)
+      # workout.exercises do |exercise|
+      #   workout.merge! exercise.to_builder.attributes
+      # end
     end
   end
 

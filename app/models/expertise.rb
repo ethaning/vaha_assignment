@@ -14,7 +14,7 @@ class Expertise < ApplicationRecord
 
   def to_builder
     Jbuilder.new do |expertise|
-      expertise.(self, :name)
+      expertise.(self, *self.attributes.keys)
     end
   end
 end
