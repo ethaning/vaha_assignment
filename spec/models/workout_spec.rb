@@ -21,6 +21,9 @@
 require 'rails_helper'
 
 RSpec.describe Workout, type: :model do
+  let(:trainer) { create :trainer }
+  let(:trainee) { create :trainee }
+
   subject { build :workout }
 
   context "relations" do
@@ -30,9 +33,6 @@ RSpec.describe Workout, type: :model do
   end
 
   context "validations" do
-    let(:trainer) { create :trainer }
-    let(:trainee) { create :trainee }
-
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:state) }
     it { should validate_presence_of(:duration) }
@@ -50,5 +50,26 @@ RSpec.describe Workout, type: :model do
     end
   end
 
-  # check that duration is updated when exercises are added/removed
+  context "#duration" do
+    let(:exercise) { create :exercise, duration: 60 }
+
+    subject { create :workout }
+
+    it "updates on save when exercises are added or removed" do
+      expect(subject.exercises.count).to eq(0)
+      expect(subject.duration).to eq(0)
+
+      subject.exercises << exercise
+      subject.reload
+
+      expect(subject.exercises.count).to eq(1)
+      expect(subject.duration).to eq(exercise.duration)
+
+      WorkoutExercise.find_by(workout: subject, exercise: exercise).destroy!
+      subject.reload
+
+      expect(subject.exercises.count).to eq(0)
+      expect(subject.duration).to eq(0)
+    end
+  end
 end

@@ -21,4 +21,13 @@
 class WorkoutExercise < ApplicationRecord
   belongs_to :workout
   belongs_to :exercise
+
+  after_create :update_workout_duration
+  after_destroy :update_workout_duration
+
+  private
+
+  def update_workout_duration
+    workout.update(duration: workout.exercises.sum(:duration))
+  end
 end
