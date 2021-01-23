@@ -62,4 +62,10 @@ Exercises have a fixed duration
 
 - write specs for the main actions
   - ensure errors are handled appropriately
+    - appropriate http codes
+    - good error messages
   - cover edge cases
+
+- ensure app works in dev mode
+  - rack-cors
+  - (test using postman, etc)
