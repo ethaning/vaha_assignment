@@ -42,7 +42,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  validates :first_name, :last_name, :password, presence: true
+  validates :first_name, :last_name, presence: true
+  validates :password, confirmation: true
   validates :email, presence: true, length: { maximum: 255 }, format: { with: Devise.email_regexp },
                     uniqueness: { case_sensitive: false, scope: :provider }
 
