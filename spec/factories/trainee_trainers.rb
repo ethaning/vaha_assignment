@@ -1,38 +1,22 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: trainee_trainers
 #
-#  id                     :bigint           not null, primary key
-#  allow_password_change  :boolean          default(FALSE)
-#  confirmation_sent_at   :datetime
-#  confirmation_token     :string
-#  confirmed_at           :datetime
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  first_name             :string
-#  last_name              :string
-#  provider               :string           default("email"), not null
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
-#  reset_password_token   :string
-#  tokens                 :json
-#  type                   :string
-#  uid                    :string           default(""), not null
-#  unconfirmed_email      :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  expertise_id           :bigint
+#  id         :bigint           not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  trainee_id :bigint           not null
+#  trainer_id :bigint           not null
 #
 # Indexes
 #
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_expertise_id          (expertise_id)
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_uid_and_provider      (uid,provider) UNIQUE
+#  index_trainee_trainers_on_trainee_id  (trainee_id)
+#  index_trainee_trainers_on_trainer_id  (trainer_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (expertise_id => expertises.id)
+#  fk_rails_...  (trainee_id => users.id)
+#  fk_rails_...  (trainer_id => users.id)
 #
 FactoryBot.define do
   factory :trainee_trainer do
