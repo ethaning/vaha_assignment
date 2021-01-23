@@ -29,29 +29,13 @@ RSpec.describe Trainers::WorkoutsController, type: :request do
     context "when current user is a trainee" do
       let(:current_user) { trainee }
 
-      it "returns an error" do
-        subject
-
-        expect(response).to have_http_status(:unauthorized)
-
-        res = json_response
-        expect(res[:name]).to be_nil
-        expect(res[:errors]).to eq(["You are not authorized to view this resource."])
-      end
+      it_behaves_like "unauthorized_trainee"
     end
 
     context "when current user is not signed in" do
       subject { get trainers_workout_path(workout), headers: json_headers, as: :json }
 
-      it "returns an error" do
-        subject
-
-        expect(response).to have_http_status(:unauthorized)
-
-        res = json_response
-        expect(res[:name]).to be_nil
-        expect(res[:errors]).to eq(["You need to sign in or sign up before continuing."])
-      end
+      it_behaves_like "unauthorized_user"
     end
   end
 
@@ -67,7 +51,7 @@ RSpec.describe Trainers::WorkoutsController, type: :request do
       }
     end
 
-    subject { post trainers_workouts_path(workout), params: params, headers: create_auth_headers(current_user), as: :json }
+    subject { post trainers_workouts_path, params: params, headers: create_auth_headers(current_user), as: :json }
 
     context "when current user is a trainer" do
       let(:current_user) { trainer }
@@ -110,31 +94,15 @@ RSpec.describe Trainers::WorkoutsController, type: :request do
     end
 
     context "when current user is a trainee" do
-      # let(:current_user) { trainee }
+      let(:current_user) { trainee }
 
-      # it "returns an error" do
-      #   subject
-
-      #   expect(response).to have_http_status(:unauthorized)
-
-      #   res = json_response
-      #   expect(res[:name]).to be_nil
-      #   expect(res[:errors]).to eq(["You are not authorized to view this resource."])
-      # end
+      it_behaves_like "unauthorized_trainee"
     end
 
     context "when current user is not signed in" do
-      # subject { get trainers_workout_path(workout), headers: json_headers, as: :json }
+      subject { post trainers_workouts_path, params: params, headers: json_headers, as: :json }
 
-      # it "returns an error" do
-      #   subject
-
-      #   expect(response).to have_http_status(:unauthorized)
-
-      #   res = json_response
-      #   expect(res[:name]).to be_nil
-      #   expect(res[:errors]).to eq(["You need to sign in or sign up before continuing."])
-      # end
+      it_behaves_like "unauthorized_user"
     end
   end
 end
