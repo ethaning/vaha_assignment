@@ -5,7 +5,13 @@ module Trainers
     before_action :find_workout, except: :create
     before_action :current_user_is_creator, only: %i[update destroy]
 
+    # Request params:
+    # {
+    #   id: required,
+    # }
+    #
     # Returns a workout object on success
+    #
     def show
     end
 
@@ -46,7 +52,17 @@ module Trainers
       update_workout_exercises
     end
 
+    # Request params:
+    # {
+    #   id: required,
+    # }
+    #
+    # current_user can only update workouts that they have created.
+    #
+    # Returns { success: true } on success
+    #
     def destroy
+      @workout.destroy!
     end
 
     def assign

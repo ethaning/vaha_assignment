@@ -175,4 +175,32 @@ RSpec.describe Trainers::WorkoutsController, type: :request do
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    let(:workout) { create :workout, :with_exercise, creator: current_user }
+
+    subject { delete trainers_workout_path(workout), headers: create_auth_headers(current_user), as: :json }
+
+    context "when current user is a trainer" do
+      let(:current_user) { trainer }
+
+      context "with valid params" do
+        context "when current_user created the workout" do
+          it "updates the workout" do
+            subject
+
+            res = json_response
+            expect(res[:success]).to eq true
+          end
+
+        end
+
+        context "when current_user did not create the workout" do
+          let(:workout) { create :workout, :with_exercise }
+
+          it_behaves_like "unauthorized_action"
+        end
+      end
+    end
+  end
 end
