@@ -35,4 +35,6 @@ class Trainer < User
 
   has_many :trainee_trainers
   has_many :trainees, through: :trainee_trainer
+
+  validates :expertise_id, presence: true
 end
