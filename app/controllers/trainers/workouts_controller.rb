@@ -1,11 +1,13 @@
 module Trainers
   class WorkoutsController < ApplicationController
     before_action :authenticate_user!
+    before_action :authorize_trainer!
     before_action :find_workout, only: :show
 
     def create
     end
 
+    # Returns a workout object
     def show
     end
 
