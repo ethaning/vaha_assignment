@@ -11,4 +11,8 @@ class ApplicationController < ActionController::API
   def authorize_trainer!
     render json: unauthorized_error, status: 401 unless current_user&.trainer?
   end
+
+  def authorize_trainee!
+    render json: unauthorized_error, status: 401 unless current_user&.trainee?
+  end
 end

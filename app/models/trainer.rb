@@ -42,6 +42,8 @@ class Trainer < User
 
   validates :expertise_id, presence: true
 
+  scope :by_expertise, ->(expertise) { expertise.blank? ? self : where(expertise_id: expertise.id) }
+
   def to_builder
     Jbuilder.new do |user|
       user.(self, :id, :first_name, :last_name, :email, :created_at, :type)
