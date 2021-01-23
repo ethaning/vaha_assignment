@@ -21,4 +21,12 @@
 class TraineeWorkout < ApplicationRecord
   belongs_to :trainee, class_name: "User"
   belongs_to :workout
+
+  def to_builder
+    Jbuilder.new do |tw|
+      tw.(self, *self.attributes.except("creator_id", "workout_id").keys)
+      tw.trainee trainee.to_builder
+      tw.workout workout.to_builder
+    end
+  end
 end

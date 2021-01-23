@@ -4,6 +4,7 @@ module Trainers
     before_action :authorize_trainer!
     before_action :find_workout, except: :create
     before_action :current_user_is_creator, only: %i[update destroy]
+    before_action :find_trainee, only: :assign
 
     # Request params:
     # {
@@ -65,7 +66,18 @@ module Trainers
       @workout.destroy!
     end
 
+    # Request params:
+    # {
+    #   id: required,
+    #   trainee_id: :required,
+    # }
+    #
+    # current_user can only update workouts that they have created.
+    #
+    # Returns a TraineeWorkout object on success
+    #
     def assign
+      @trainee_workout = TraineeWorkout.create! trainee: @trainee, workout: @workout
     end
 
     private
@@ -85,6 +97,10 @@ module Trainers
 
     def current_user_is_creator
       render json: unauthorized_error, status: 401 unless current_user == @workout.creator
+    end
+
+    def find_trainee
+      @trainee = Trainee.find(params[:trainee_id])
     end
   end
 end

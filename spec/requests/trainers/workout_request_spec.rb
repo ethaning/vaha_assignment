@@ -203,4 +203,76 @@ RSpec.describe Trainers::WorkoutsController, type: :request do
       end
     end
   end
+
+  describe "POST #assign" do
+    let(:workout) { create :workout, :with_exercise, creator: current_user }
+    let(:params) {{ trainee_id: trainee.id }}
+
+    subject { post assign_trainers_workout_path(workout), params: params, headers: create_auth_headers(current_user), as: :json }
+
+    context "when current user is a trainer" do
+      let(:current_user) { trainer }
+
+      context "with valid params" do
+        context "when current_user created the workout" do
+          it "assigns the workout to the trainee" do
+            subject
+
+            tw = TraineeWorkout.find_by(workout: workout, trainee: trainee)
+
+            res = json_response
+            expect(res[:id]).to eq tw.id
+            expect(res[:workout][:id]).to eq workout.id
+            expect(res[:workout][:duration]).to eq workout.duration
+            expect(res[:workout][:exercises].count).to eq workout.exercises.count
+            expect(res[:trainee][:id]).to eq trainee.id
+            expect(res[:trainee][:email]).to eq trainee.email
+          end
+        end
+
+        context "when current_user did not create the workout" do
+          let(:workout) { create :workout, :with_exercise }
+
+          it "assigns the workout to the trainee" do
+            subject
+
+            tw = TraineeWorkout.find_by(workout: workout, trainee: trainee)
+
+            res = json_response
+            expect(res[:id]).to eq tw.id
+            expect(res[:workout][:id]).to eq workout.id
+            expect(res[:workout][:duration]).to eq workout.duration
+            expect(res[:workout][:exercises].count).to eq workout.exercises.count
+            expect(res[:trainee][:id]).to eq trainee.id
+            expect(res[:trainee][:email]).to eq trainee.email
+          end
+        end
+      end
+
+      context "with invalid params" do
+        context "when a trainer is given instead of a trainee" do
+          let(:new_trainer) { create :trainer }
+          let(:params) {{ trainee_id: new_trainer.id }}
+
+          it "returns an error" do
+            subject
+
+            res = json_response
+            expect(res[:errors].first).to match("Couldn't find Trainee")
+          end
+        end
+      end
+
+      context "with missing params" do
+        let(:params) { {} }
+
+        it "returns an error" do
+          subject
+
+          res = json_response
+          expect(res[:errors].first).to match("Couldn't find Trainee without an ID")
+        end
+      end
+    end
+  end
 end

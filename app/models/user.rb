@@ -57,8 +57,7 @@ class User < ApplicationRecord
 
   def to_builder
     Jbuilder.new do |user|
-      user.(self, :first_name, :last_name, :email, :created_at, :type)
-      user.expertise expertise.to_builder
+      user.(self, :id, :first_name, :last_name, :email, :created_at, :type)
     end
   end
 end

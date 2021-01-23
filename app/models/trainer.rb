@@ -41,4 +41,11 @@ class Trainer < User
   has_many :trainees, through: :trainee_trainers
 
   validates :expertise_id, presence: true
+
+  def to_builder
+    Jbuilder.new do |user|
+      user.(self, :id, :first_name, :last_name, :email, :created_at, :type)
+      user.expertise expertise.to_builder
+    end
+  end
 end
