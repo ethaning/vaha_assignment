@@ -42,7 +42,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :password, presence: true
   validates :email, presence: true, length: { maximum: 255 }, format: { with: Devise.email_regexp },
                     uniqueness: { case_sensitive: false, scope: :provider }
+
+  def trainer?
+    type == "Trainer"
+  end
+
+  def trainee?
+    type == "Trainee"
+  end
 end

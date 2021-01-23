@@ -30,6 +30,9 @@ RSpec.describe Workout, type: :model do
   end
 
   context "validations" do
+    let(:trainer) { create :trainer }
+    let(:trainee) { create :trainee }
+
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:state) }
     it { should validate_presence_of(:duration) }
@@ -37,7 +40,14 @@ RSpec.describe Workout, type: :model do
 
     it { should define_enum_for(:state).with_values(%i[draft published]) }
 
-    # validate that creator is a trainer
+    it "ensures that creator is a trainer" do
+      subject.creator = trainer
+      subject.save!
+
+      expect(subject.errors.count).to eq(0)
+
+      expect { subject.update!(creator: trainee) }.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 
   # check that duration is updated when exercises are added/removed

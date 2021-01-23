@@ -29,6 +29,13 @@ class Workout < ApplicationRecord
 
   validates :name, :state, presence: true
   validates :duration, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validate :creator_is_trainer
 
   enum state: { draft: 0, published: 1 }
+
+  private
+
+  def creator_is_trainer
+    errors.add :creator, "must be a Trainer" if creator && !creator.trainer?
+  end
 end
