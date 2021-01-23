@@ -33,6 +33,8 @@ class Workout < ApplicationRecord
 
   enum state: { draft: 0, published: 1 }
 
+  before_create :set_published
+
   def to_builder
     Jbuilder.new do |workout|
       workout.(self, :name, :duration, :state, :created_at)
@@ -44,5 +46,9 @@ class Workout < ApplicationRecord
 
   def creator_is_trainer
     errors.add :creator, "must be a Trainer" if creator && !creator.trainer?
+  end
+
+  def set_published
+    self.state = :published
   end
 end
