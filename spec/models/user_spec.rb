@@ -4,6 +4,9 @@
 #
 #  id                     :bigint           not null, primary key
 #  allow_password_change  :boolean          default(FALSE)
+#  confirmation_sent_at   :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
@@ -15,6 +18,7 @@
 #  tokens                 :json
 #  type                   :string
 #  uid                    :string           default(""), not null
+#  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  expertise_id           :bigint
@@ -40,6 +44,6 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:last_name) }
     it { should validate_presence_of(:email) }
     it { should validate_length_of(:email).is_at_most(255) }
-    it { should validate_uniqueness_of(:email).case_insensitive }
+    it { should validate_uniqueness_of(:email).case_insensitive.scoped_to(:provider) }
   end
 end

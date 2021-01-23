@@ -4,6 +4,9 @@
 #
 #  id                     :bigint           not null, primary key
 #  allow_password_change  :boolean          default(FALSE)
+#  confirmation_sent_at   :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
@@ -15,6 +18,7 @@
 #  tokens                 :json
 #  type                   :string
 #  uid                    :string           default(""), not null
+#  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  expertise_id           :bigint
@@ -34,11 +38,11 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 
   validates :first_name, :last_name, presence: true
   validates :email, presence: true, length: { maximum: 255 }, format: { with: Devise.email_regexp },
-                    uniqueness: { case_sensitive: false }
+                    uniqueness: { case_sensitive: false, scope: :provider }
 end
