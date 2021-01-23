@@ -34,9 +34,13 @@
 #
 #  fk_rails_...  (expertise_id => expertises.id)
 #
-class Trainee < User
-  has_many :trainee_trainer
-  has_many :trainers, through: :trainee_trainer
-  has_many :trainee_workouts
-  has_many :workouts, through: :trainee_workouts
+require 'rails_helper'
+
+RSpec.describe TraineeTrainer, type: :model do
+  subject { build :trainee_trainer }
+
+  context "relations" do
+    it { should belong_to(:trainee).class_name("User") }
+    it { should belong_to(:trainer).class_name("User") }
+  end
 end

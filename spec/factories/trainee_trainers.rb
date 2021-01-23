@@ -34,9 +34,9 @@
 #
 #  fk_rails_...  (expertise_id => expertises.id)
 #
-class Trainee < User
-  has_many :trainee_trainer
-  has_many :trainers, through: :trainee_trainer
-  has_many :trainee_workouts
-  has_many :workouts, through: :trainee_workouts
+FactoryBot.define do
+  factory :trainee_trainer do
+    association :trainee, strategy: :build
+    association :trainer, strategy: :build
+  end
 end

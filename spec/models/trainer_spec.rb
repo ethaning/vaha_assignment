@@ -41,6 +41,7 @@ RSpec.describe Trainer, type: :model do
 
   context "relations" do
     it { should belong_to(:expertise) }
+    it { should have_many(:trainees).through(:trainee_trainer) }
   end
 
   context "validations" do
