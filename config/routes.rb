@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         resources :workouts, only: %i[index]
         resources :trainers, only: %i[index] do
           member do
-            get :select
+            post :select
           end
         end
       end

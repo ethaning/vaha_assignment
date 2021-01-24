@@ -58,4 +58,44 @@ RSpec.describe Trainees::TrainersController, type: :request do
       end
     end
   end
+
+  describe "POST #select" do
+    let(:trainer) { create :trainer }
+    let(:params) { { id: trainer.id } }
+
+    subject { post select_trainees_trainer_path(trainer), headers: create_auth_headers(current_user), as: :json }
+
+    context "when current user is a trainee" do
+      let(:current_user) { trainee }
+
+      context "with valid params" do
+        it "returns the newly created TraineeTrainer record" do
+          subject
+
+          expect(response).to have_http_status(:ok)
+
+          trainee_trainer = TraineeTrainer.find_by(trainee: trainee, trainer: trainer)
+
+          res = json_response
+          expect(res[:id]).to eq trainee_trainer.id
+          expect(res[:trainee][:id]).to eq trainee.id
+          expect(res[:trainee][:email]).to eq trainee.email
+          expect(res[:trainer][:id]).to eq trainer.id
+          expect(res[:trainer][:email]).to eq trainer.email
+        end
+      end
+    end
+
+    context "when current user is a trainer" do
+      let(:current_user) { trainer }
+
+      it_behaves_like "unauthorized_action"
+    end
+
+    context "when current user is not signed in" do
+      subject { post select_trainees_trainer_path(trainer), headers: json_headers, as: :json }
+
+      it_behaves_like "unauthorized_user"
+    end
+  end
 end

@@ -2,6 +2,7 @@ module Trainees
   class TrainersController < ApplicationController
     before_action :authenticate_user!
     before_action :authorize_trainee!
+    before_action :find_trainer, only: :select
 
     # Request params:
     # {
@@ -24,6 +25,13 @@ module Trainees
     # Returns given trainers, on success
     #
     def select
+      @trainee_trainer = TraineeTrainer.create! trainee: current_user, trainer: @trainer
+    end
+
+    private
+
+    def find_trainer
+      @trainer = Trainer.find(params[:id])
     end
   end
 end
