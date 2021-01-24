@@ -5,7 +5,7 @@
 #  id         :bigint           not null, primary key
 #  duration   :integer          default(0), not null
 #  name       :string           not null
-#  state      :integer          default(0)
+#  state      :integer          default("draft")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  creator_id :bigint           not null
