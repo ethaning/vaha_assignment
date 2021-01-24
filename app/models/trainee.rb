@@ -39,4 +39,5 @@ class Trainee < User
   has_many :trainers, through: :trainee_trainers
   has_many :trainee_workouts
   has_many :workouts, through: :trainee_workouts
+  has_many :workout_sessions, through: :trainee_workouts
 end

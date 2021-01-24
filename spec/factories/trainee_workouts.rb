@@ -17,11 +17,9 @@
 #
 #  fk_rails_...  (trainee_workout_id => trainee_workouts.id)
 #
-require 'rails_helper'
-
-RSpec.describe WorkoutSession, type: :model do
-  context "relations" do
-    it { should belong_to(:trainee_workout) }
-    it { should have_one(:trainee).through(:trainee_workout) }
+FactoryBot.define do
+  factory :trainee_workout do
+    association :trainee
+    association :workout
   end
 end

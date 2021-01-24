@@ -23,6 +23,7 @@ class Workout < ApplicationRecord
 
   has_many :trainee_workouts
   has_many :trainees, through: :trainee_workouts
+  has_many :workout_sessions, through: :trainee_workouts
 
   has_many :workout_exercises, dependent: :destroy
   has_many :exercises, through: :workout_exercises

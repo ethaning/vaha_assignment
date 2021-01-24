@@ -19,8 +19,8 @@
 #
 FactoryBot.define do
   factory :workout_session do
-    trainee_workout { nil }
-    started_at { "2021-01-24 00:10:07" }
-    completed_at { "2021-01-24 00:10:07" }
+    association :trainee_workout
+    started_at { Time.now.utc - 1.hour }
+    completed_at { Time.now.utc }
   end
 end

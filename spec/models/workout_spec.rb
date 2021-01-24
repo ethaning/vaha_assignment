@@ -29,6 +29,7 @@ RSpec.describe Workout, type: :model do
   context "relations" do
     it { should belong_to(:creator).class_name("User") }
     it { should have_many(:trainees).through(:trainee_workouts) }
+    it { should have_many(:workout_sessions).through(:trainee_workouts) }
     it { should have_many(:exercises).through(:workout_exercises) }
   end
 

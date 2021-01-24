@@ -21,6 +21,7 @@
 class TraineeWorkout < ApplicationRecord
   belongs_to :trainee, class_name: "User"
   belongs_to :workout
+  has_many :workout_sessions
 
   def to_builder
     Jbuilder.new do |tw|

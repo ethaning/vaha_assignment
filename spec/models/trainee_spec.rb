@@ -41,6 +41,7 @@ RSpec.describe Trainee, type: :model do
 
   context "relations" do
     it { should have_many(:trainers).through(:trainee_trainers) }
+    it { should have_many(:workout_sessions).through(:trainee_workouts) }
 
     it { should_not belong_to(:expertise) }
   end

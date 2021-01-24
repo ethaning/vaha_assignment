@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       end
 
       namespace :trainees do
-        resources :workouts, only: %i[index]
+        resources :workout_sessions, only: %i[index]
         resources :trainers, only: %i[index] do
           member do
             post :select
